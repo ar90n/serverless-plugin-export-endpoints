@@ -1,2 +1,2 @@
 # serverless-plugin-export-endpoints
-Export lambda endpoints as json
+Export API Gateway endpoints as json

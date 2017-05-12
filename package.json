@@ -1,0 +1,26 @@
+{
+  "name": "serverless-plugin-export-endpoints",
+  "version": "0.1.0",
+  "description": "Serverless plugin to export API Gateway endpoints as json",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ar90n/serverless-plugin-export-endpoints.git"
+  },
+  "keywords": [
+    "serverless",
+    "AWS",
+    "engpoint"
+  ],
+  "author": "Masahiro Wada",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ar90n/serverless-plugin-export-endpoints/issues"
+  },
+  "homepage": "https://github.com/ar90n/serverless-plugin-export-endpoints#readme",
+  "dependencies": {
+  }
+}
