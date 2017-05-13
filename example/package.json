@@ -1,6 +1,6 @@
 {
   "name": "serverless-plugin-export-endpoitns-example",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Example for serverless-plugin-export-endpoints",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -11,6 +11,6 @@
     "node-fetch": "^1.6.3"
   },
   "devDependencies": {
-    "serverless-plugin-export-endpoints": "^0.1.0"
+    "serverless-plugin-export-endpoints": "^0.1.1"
   }
 }
