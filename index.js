@@ -50,7 +50,10 @@ class ServerlessPlugin {
                             let [method,path] = is_http_object ? [event.http.method.toUpperCase(),event.http.path]
                                                                : [event.http.split(' ')[0].toUpperCase(),event.http.split(' ')[1]];
                             path = path !== '/' ? `/${path.split('/').filter(p => p !== '').join('/')}` : '';
-                            return Object.assign({} , acc2, { [method]: `${endpoint}${path}` });
+                            path = path.replace( /{/g, '{{').replace( /}/g, '}}')
+                            method = method !== 'ANY' ? [method] : ['DELETE', 'GET', 'HEAD', 'OPTIONS', 'PATCH', 'POST', 'PUT'];
+
+                            return Object.assign({} , acc2, ...(method.map((key) => {return {[key]:`${endpoint}${path}`}})));
                         },{});
                         return Object.assign({}, acc1, { [name] : tmp1 });
                     }, {});
