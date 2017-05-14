@@ -16,6 +16,11 @@ Example
     $cd example
     $sls deploy
     $sls exportEndpoints
+    $cat endpoints.json
+    {
+      "hello": {
+      "GET": "https://your-api-gateway-endpoint.execute-api.us-east-1.amazonaws.com/dev/hello"
+    }
     $node test.js
     Go Serverless v1.0! Your function executed successfully!
 
