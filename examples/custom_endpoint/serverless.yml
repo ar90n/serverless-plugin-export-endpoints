@@ -1,0 +1,58 @@
+# Welcome to Serverless!
+#
+# This file is the main config file for your service.
+# It's very minimal at this point and uses default values.
+# You can always add more config options for more control.
+# We've included some commented out config examples here.
+# Just uncomment any of them to get that config option.
+#
+# For full config options, check the docs:
+#    docs.serverless.com
+#
+# Happy Coding!
+
+service: sls-plg-xprt-endpoints-example
+
+provider:
+  name: aws
+  runtime: nodejs6.10
+
+plugins:
+  - serverless-plugin-export-endpoints
+
+custom:
+  exportEndpoints:
+    path: './endpoints.json'
+  myDomain: "api.mydomain.com"
+
+functions:
+  hello:
+    handler: handler.hello
+    events:
+      - http:
+          method: get
+          path: hello
+
+resources:
+  Resources:
+    APICertificate:
+      Type: "AWS::CertificateManager::Certificate"
+      DeletionPolicy: Retain
+      Properties:
+        DomainName: "${self:custom.myDomain}"
+    APIDomain:
+      Type: "AWS::ApiGateway::DomainName"
+      Properties:
+        CertificateArn:
+          Ref: APICertificate
+        DomainName: "${self:custom.myDomain}"
+    APIBasePathMapping:
+      Type: "AWS::ApiGateway::BasePathMapping"
+      Properties:
+        DomainName:
+          Ref: APIDomain
+        RestApiId:
+          Ref: ApiGatewayRestApi
+  Outputs:
+    CustomServiceEndpoint:
+      Value: "https://${self:custom.myDomain}"
