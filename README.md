@@ -24,6 +24,16 @@ Example
     $node test.js
     Go Serverless v1.0! Your function executed successfully!
 
+Configuration
+===============
+
+    custom:
+        exportEndpoints:
+            path: "./endpoints.json" # optional
+            serviceEndpointKey: "/^ServiceEndpoint/" # optional, regex or string
+
+Note: serviceEndpointKey is by default provided by the Serverless AWS provider https://github.com/serverless/serverless/blob/master/lib/plugins/aws/lib/naming.js
+
 License
 ===============
 This software is released under the MIT License, see LICENSE.txt.

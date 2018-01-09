@@ -31,13 +31,15 @@ class ServerlessPlugin {
         const export_path = (options.path && path.normalize(options.path)) || './endpoints.json';
         const dir_name = path.dirname(export_path);
         const file_name = path.basename(export_path);
+        const service_endpoint_key = options.serviceEndpointKey || this.provider.naming.getServiceEndpointRegex();
+        
         return this.provider.request('CloudFormation', 'describeStacks', { StackName }, options.stage, options.region).then((response) => {
             if (!response) {
                 return;
             }
 
             const result = response.Stacks[0].Outputs
-                .filter(x => x.OutputKey.match(this.provider.naming.getServiceEndpointRegex()))
+                .filter(x => x.OutputKey.match(service_endpoint_key))
                 .reduce((acc0,x) => {
                     const endpoint = x.OutputValue;
                     const tmp0 = this.serverless.service.getAllFunctions().reduce((acc1,name) => {
