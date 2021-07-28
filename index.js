@@ -39,18 +39,20 @@ class ServerlessPlugin {
             }
 
             const result = response.Stacks[0].Outputs
-                .filter(x => x.OutputKey.match(service_endpoint_key))
+                .filter(x => x.OutputKey.match(service_endpoint_key) && x.OutputKey !== "ServiceEndpointWebsocket")
                 .reduce((acc0,x) => {
                     const endpoint = x.OutputValue;
                     const tmp0 = this.serverless.service.getAllFunctions().reduce((acc1,name) => {
                         const tmp1 = this.serverless.service.functions[name].events.reduce((acc2,event) => {
-                            if (!event.http) {
-                                return;
+                            if (!event.http && !event.httpApi) {
+                                return undefined;
                             }
 
                             const is_http_object = (typeof event.http === 'object');
-                            let [method,path] = is_http_object ? [event.http.method.toUpperCase(),event.http.path]
-                                                               : [event.http.split(' ')[0].toUpperCase(),event.http.split(' ')[1]];
+                            const is_httpApi_object = (typeof event.httpApi === 'object');
+                            let [method,path] = is_http_object ? [event.http.method.toUpperCase(),event.http.path] :
+                                                is_httpApi_object ? [event.httpApi.method.toUpperCase(),event.httpApi.path] :
+                                                [event.http.split(' ')[0].toUpperCase(),event.http.split(' ')[1]];
                             path = path !== '/' ? `/${path.split('/').filter(p => p !== '').join('/')}` : '';
                             path = path.replace( /{/g, '{{').replace( /}/g, '}}')
                             method = method !== 'ANY' ? [method] : ['DELETE', 'GET', 'HEAD', 'OPTIONS', 'PATCH', 'POST', 'PUT'];
