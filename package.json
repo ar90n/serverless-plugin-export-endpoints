@@ -1,6 +1,6 @@
 {
   "name": "serverless-plugin-export-endpoints",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Serverless plugin to export API Gateway endpoints as json",
   "main": "index.js",
   "scripts": {
